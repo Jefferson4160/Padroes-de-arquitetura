@@ -1,27 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package prime;
 
-import prime.view.Menu;
+import java.awt.GraphicsEnvironment;
+import prime.mvp.cliente.presenter.ClientePresenter;
+import prime.mvp.cliente.repository.InMemoryClienteRepository;
+import prime.mvp.cliente.service.ClienteService;
+import prime.mvp.cliente.view.ClienteConsoleView;
+import prime.mvp.cliente.view.ClienteSwingView;
 
-/**
- *
- * @author Scholl
- */
 public class Main {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-                java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Menu().setVisible(true);
-            }
+        if (GraphicsEnvironment.isHeadless()) {
+            ClienteConsoleView consoleView = new ClienteConsoleView();
+            ClientePresenter presenter = new ClientePresenter(consoleView, new ClienteService(new InMemoryClienteRepository()));
+            presenter.iniciar();
+            presenter.salvarCliente("Cliente de Teste", "123.456.789-00", "teste@exemplo.com");
+            return;
+        }
+
+        java.awt.EventQueue.invokeLater(() -> {
+            ClienteSwingView view = new ClienteSwingView();
+            view.setVisible(true);
         });
     }
-
 }
