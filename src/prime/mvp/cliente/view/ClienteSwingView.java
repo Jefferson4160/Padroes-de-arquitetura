@@ -38,7 +38,7 @@ public class ClienteSwingView extends JFrame implements ClienteViewContract {
     }
 
     private void inicializarInterface() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout(10, 10));
 
         JPanel painelFormulario = new JPanel(new GridLayout(4, 2, 5, 5));
