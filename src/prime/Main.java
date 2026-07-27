@@ -14,7 +14,7 @@ public class Main {
             ClienteConsoleView consoleView = new ClienteConsoleView();
             ClientePresenter presenter = new ClientePresenter(consoleView, new ClienteService(new InMemoryClienteRepository()));
             presenter.iniciar();
-            presenter.salvarCliente("Cliente de Teste", "123.456.789-00", "teste@exemplo.com");
+            presenter.salvarCliente(0, "Cliente de Teste", "123.456.789-00", "teste@exemplo.com");
             return;
         }
 

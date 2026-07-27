@@ -27,4 +27,14 @@ public class ClienteConsoleView implements ClienteViewContract {
     public void mostrarMensagem(String mensagem) {
         System.out.println(mensagem);
     }
+
+    @Override
+    public void preencherFormulario(ClienteModel cliente) {
+        System.out.println("Carregando cliente: " + cliente.getNome());
+    }
+
+    @Override
+    public void selecionarLinha(int linha) {
+        System.out.println("Linha selecionada: " + linha);
+    }
 }

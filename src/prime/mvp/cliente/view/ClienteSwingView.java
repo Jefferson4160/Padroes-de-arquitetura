@@ -25,6 +25,7 @@ public class ClienteSwingView extends JFrame implements ClienteViewContract {
     private final JTextField txtCpf = new JTextField(20);
     private final JTextField txtEmail = new JTextField(20);
     private final JTable tabela = new JTable();
+    private int clienteSelecionadoId = 0;
 
     public ClienteSwingView() {
         super("Clientes - MVP");
@@ -48,8 +49,11 @@ public class ClienteSwingView extends JFrame implements ClienteViewContract {
         painelFormulario.add(new JLabel("Email:"));
         painelFormulario.add(txtEmail);
 
+        JButton btnNovo = new JButton("Novo");
+        btnNovo.addActionListener(e -> presenter.novoCliente());
+
         JButton btnSalvar = new JButton("Salvar");
-        btnSalvar.addActionListener(e -> presenter.salvarCliente(txtNome.getText(), txtCpf.getText(), txtEmail.getText()));
+        btnSalvar.addActionListener(e -> presenter.salvarCliente(clienteSelecionadoId, txtNome.getText(), txtCpf.getText(), txtEmail.getText()));
 
         JButton btnRemover = new JButton("Remover selecionado");
         btnRemover.addActionListener(e -> {
@@ -60,7 +64,14 @@ public class ClienteSwingView extends JFrame implements ClienteViewContract {
             }
         });
 
+        tabela.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                presenter.editarClienteSelecionado(tabela.getSelectedRow());
+            }
+        });
+
         JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        painelBotoes.add(btnNovo);
         painelBotoes.add(btnSalvar);
         painelBotoes.add(btnRemover);
 
@@ -85,10 +96,32 @@ public class ClienteSwingView extends JFrame implements ClienteViewContract {
         txtNome.setText("");
         txtCpf.setText("");
         txtEmail.setText("");
+        clienteSelecionadoId = 0;
     }
 
     @Override
     public void mostrarMensagem(String mensagem) {
         JOptionPane.showMessageDialog(this, mensagem);
+    }
+
+    @Override
+    public void preencherFormulario(ClienteModel cliente) {
+        if (cliente == null) {
+            limparFormulario();
+            return;
+        }
+        clienteSelecionadoId = cliente.getId();
+        txtNome.setText(cliente.getNome() != null ? cliente.getNome() : "");
+        txtCpf.setText(cliente.getCpf() != null ? cliente.getCpf() : "");
+        txtEmail.setText(cliente.getEmail() != null ? cliente.getEmail() : "");
+    }
+
+    @Override
+    public void selecionarLinha(int linha) {
+        if (linha >= 0 && linha < tabela.getRowCount()) {
+            tabela.setRowSelectionInterval(linha, linha);
+        } else {
+            tabela.clearSelection();
+        }
     }
 }

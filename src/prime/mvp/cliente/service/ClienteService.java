@@ -15,12 +15,13 @@ public class ClienteService {
         return repository.buscarTodos();
     }
 
-    public void salvarCliente(String nome, String cpf, String email) {
+    public void salvarCliente(int id, String nome, String cpf, String email) {
         if (nome == null || nome.trim().isEmpty()) {
             throw new IllegalArgumentException("Nome é obrigatório.");
         }
 
         ClienteModel cliente = new ClienteModel();
+        cliente.setId(id);
         cliente.setNome(nome.trim());
         cliente.setCpf(cpf == null ? "" : cpf.trim());
         cliente.setEmail(email == null ? "" : email.trim());

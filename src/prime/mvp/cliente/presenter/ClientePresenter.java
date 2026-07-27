@@ -23,15 +23,32 @@ public class ClientePresenter {
         view.mostrarClientes(clientes);
     }
 
-    public void salvarCliente(String nome, String cpf, String email) {
+    public void salvarCliente(int id, String nome, String cpf, String email) {
         try {
-            service.salvarCliente(nome, cpf, email);
+            service.salvarCliente(id, nome, cpf, email);
             view.limparFormulario();
             carregarClientes();
             view.mostrarMensagem("Cliente salvo com sucesso.");
         } catch (IllegalArgumentException ex) {
             view.mostrarMensagem(ex.getMessage());
         }
+    }
+
+    public void editarClienteSelecionado(int linha) {
+        if (linha < 0) {
+            return;
+        }
+
+        List<ClienteModel> clientes = service.listarClientes();
+        if (linha < clientes.size()) {
+            view.preencherFormulario(clientes.get(linha));
+            view.selecionarLinha(linha);
+        }
+    }
+
+    public void novoCliente() {
+        view.limparFormulario();
+        view.selecionarLinha(-1);
     }
 
     public void removerCliente(int id) {
