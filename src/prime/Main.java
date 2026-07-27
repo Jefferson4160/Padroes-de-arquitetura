@@ -1,25 +1,25 @@
 package prime;
 
 import java.awt.GraphicsEnvironment;
-import prime.mvp.fornecedor.presenter.FornecedorPresenter;
-import prime.mvp.fornecedor.repository.InMemoryFornecedorRepository;
-import prime.mvp.fornecedor.service.FornecedorService;
-import prime.mvp.fornecedor.view.FornecedorConsoleView;
-import prime.mvp.fornecedor.view.FornecedorSwingView;
+import prime.mvp.produto.presenter.ProdutoPresenter;
+import prime.mvp.produto.repository.InMemoryProdutoRepository;
+import prime.mvp.produto.service.ProdutoService;
+import prime.mvp.produto.view.ProdutoConsoleView;
+import prime.mvp.produto.view.ProdutoSwingView;
 
 public class Main {
 
     public static void main(String[] args) {
         if (GraphicsEnvironment.isHeadless()) {
-            FornecedorConsoleView consoleView = new FornecedorConsoleView();
-            FornecedorPresenter presenter = new FornecedorPresenter(consoleView, new FornecedorService(new InMemoryFornecedorRepository()));
+            ProdutoConsoleView consoleView = new ProdutoConsoleView();
+            ProdutoPresenter presenter = new ProdutoPresenter(consoleView, new ProdutoService(new InMemoryProdutoRepository()));
             presenter.iniciar();
-            presenter.salvarFornecedor(0, "Fornecedor de Teste", "12.345.678/0001-99", "teste@fornecedor.com", "(71) 99999-0000");
+            presenter.salvarProduto("P003", "Produto de Teste", "5.00", "10.00", "20");
             return;
         }
 
         java.awt.EventQueue.invokeLater(() -> {
-            FornecedorSwingView view = new FornecedorSwingView();
+            ProdutoSwingView view = new ProdutoSwingView();
             view.setVisible(true);
         });
     }
