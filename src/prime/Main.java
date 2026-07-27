@@ -1,25 +1,25 @@
 package prime;
 
 import java.awt.GraphicsEnvironment;
-import prime.mvp.cliente.presenter.ClientePresenter;
-import prime.mvp.cliente.repository.InMemoryClienteRepository;
-import prime.mvp.cliente.service.ClienteService;
-import prime.mvp.cliente.view.ClienteConsoleView;
-import prime.mvp.cliente.view.ClienteSwingView;
+import prime.mvp.fornecedor.presenter.FornecedorPresenter;
+import prime.mvp.fornecedor.repository.InMemoryFornecedorRepository;
+import prime.mvp.fornecedor.service.FornecedorService;
+import prime.mvp.fornecedor.view.FornecedorConsoleView;
+import prime.mvp.fornecedor.view.FornecedorSwingView;
 
 public class Main {
 
     public static void main(String[] args) {
         if (GraphicsEnvironment.isHeadless()) {
-            ClienteConsoleView consoleView = new ClienteConsoleView();
-            ClientePresenter presenter = new ClientePresenter(consoleView, new ClienteService(new InMemoryClienteRepository()));
+            FornecedorConsoleView consoleView = new FornecedorConsoleView();
+            FornecedorPresenter presenter = new FornecedorPresenter(consoleView, new FornecedorService(new InMemoryFornecedorRepository()));
             presenter.iniciar();
-            presenter.salvarCliente(0, "Cliente de Teste", "123.456.789-00", "teste@exemplo.com");
+            presenter.salvarFornecedor(0, "Fornecedor de Teste", "12.345.678/0001-99", "teste@fornecedor.com", "(71) 99999-0000");
             return;
         }
 
         java.awt.EventQueue.invokeLater(() -> {
-            ClienteSwingView view = new ClienteSwingView();
+            FornecedorSwingView view = new FornecedorSwingView();
             view.setVisible(true);
         });
     }
